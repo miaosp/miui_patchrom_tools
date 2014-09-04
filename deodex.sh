@@ -115,11 +115,25 @@ then
     done
 fi
 
+ls priv-app/*.odex > /dev/null
+if [ $? -eq 0 ]
+then
+    for file in priv-app/*.odex
+    do
+        if [ $1 = '-a' ]
+        then
+            deodex_one_file -a $apilevel $classpath $file apk
+        else
+            deodex_one_file $classpath $file apk
+        fi
+    done
+fi
+
 cd $tempdir
 echo "zip tmp_target_files"
 zip -q -r -y "tmp_target_files" *
 echo "replaces $stockzip"
-cp -f "tmp_target_files.zip" $stockzip
+cp -f "tmp_target_files.zip" ../$stockzip
 echo "remove $tempdir"
 rm -rf $tempdir
 echo "deodex done. deodex zip: $stockzip"
