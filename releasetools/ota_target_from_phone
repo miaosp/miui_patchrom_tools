@@ -116,7 +116,7 @@ function dump_bootimage {
             mtdn=`adb shell cat /proc/mtd | grep boot | cut -f1 -d":"`
             device=/dev/$fstype/$mtdn
         else
-            device=`echo $info | cut -d":" -f3`
+            device=`echo $info | cut -d":" -f1`
         fi
         adb pull $device $TARGET_FILES_DIR/BOOTABLE_IMAGES/boot.img
     fi
@@ -125,7 +125,7 @@ function dump_bootimage {
 # In recovery mode, extract the recovery.fstab from device
 function extract_recovery_fstab {
     echo "Extract recovery.fstab from device"
-    adb shell cat /etc/recovery.fstab | awk '{print $1 "\t" $2 "\t" $3}'> $RECOVERY_ETC_DIR/recovery.fstab
+    adb shell cat /etc/recovery.fstab | awk '{print $2 "\t" $3 "\t" $1}'> $RECOVERY_ETC_DIR/recovery.fstab
 }
 
 # In normal mode, build the recovery.fstab from device
