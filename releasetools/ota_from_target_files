@@ -160,6 +160,7 @@ class Item:
     for line in output.split("\n"):
       if not line: continue
       columns = line.split()
+      if len(columns)!=4: continue
       name, uid, gid, mode = columns[:4]
       selabel = None
       capabilities = None
